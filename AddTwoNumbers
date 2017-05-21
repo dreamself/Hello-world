@@ -1,0 +1,41 @@
+problem:
+You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
+
+You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+
+Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+Output: 7 -> 0 -> 8
+
+answer：
+public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode resNode = new ListNode(0);
+        ListNode front = resNode;
+        boolean isCarryBit = false;
+        while(l1 != null && l2 != null){
+            ListNode resNextNode  = new ListNode(0);
+            int res = l1.val + l2.val + (isCarryBit ? 1 : 0);
+            isCarryBit = res > 9 ? true : false;
+            resNextNode.val = isCarryBit ? res - 10 : res;
+            l1 = l1.next;
+            l2 = l2.next;
+            front.next = resNextNode;
+            front = resNextNode;
+        }
+        if ((l1 != null && l2 == null) || l2 != null && l1 == null){
+            ListNode startNode = (l1 != null ? l1 : l2);
+            while(startNode != null){
+                ListNode resNextNodeTmp  = new ListNode(0);
+                int res = startNode.val + (isCarryBit ? 1 : 0);
+                isCarryBit = res > 9 ? true : false;
+                resNextNodeTmp.val = isCarryBit ? res - 10 : res;
+                front.next = resNextNodeTmp;
+                front = resNextNodeTmp;
+                startNode = startNode.next;
+            }
+        }
+        if (isCarryBit){
+            ListNode resNextNode  = new ListNode(1);
+            front.next = resNextNode;
+        }
+        return resNode.next;
+    }
