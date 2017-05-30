@@ -1,0 +1,31 @@
+ public static String longestPalindrome(String s) {
+        String subString = "";
+        int len = s.length();
+        int n = 2 * len;
+        int k = 0;
+        int i = 0, j = 0;
+        int maxlen = 1;
+        while (k < n) {
+            i = k - 1 - k % 2;
+            j = k + 1 + k % 2;
+            while (i >= 0 && j < n) {
+                if (s.charAt(i / 2) == s.charAt(j / 2)) {
+                    i = i - 2;
+                    j = j + 2;
+                }
+                else{
+                    break;
+                }
+            }
+            if (k - i - 1 > maxlen) {
+                maxlen = k - i - 1;
+                subString = s.substring((i+2)/ 2, j / 2);
+            }
+            ++k;
+        }
+        if (maxlen == 1) {
+            return s.substring(0, 1);
+        } else {
+            return subString;
+        }
+    }
