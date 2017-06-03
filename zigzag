@@ -1,0 +1,36 @@
+The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
+
+P   A   H   N
+A P L S I I G
+Y   I   R
+And then read line by line: "PAHNAPLSIIGYIR"
+
+ public String convert(String s, int numRows) {
+        int i = 0;
+        int j = 0;
+        int length = s.length();
+        if (length <= numRows || numRows == 1) {
+            return s;
+        }
+        StringBuilder builder = new StringBuilder();
+        boolean bOdd= true;
+        while (i < numRows) {
+            j = i;
+            bOdd = true;
+            while (j < length) {
+                builder.append(s.charAt(j));
+                if (numRows == 2) {
+                    j += 2;
+                } else {
+                    if (i == 0 || i == numRows - 1) {
+                        j += (2*numRows -2);
+                    } else {
+                        j +=  bOdd ? 2*(numRows-i-1) : 2*i;
+                        bOdd = !bOdd;
+                    }
+                }
+            }
+            ++i;
+        }
+        return builder.toString();
+    }
