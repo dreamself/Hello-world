@@ -1,0 +1,61 @@
+Implement atoi to convert a string to an integer.
+
+Hint: Carefully consider all possible input cases. If you want a challenge, please do not see below and ask yourself what are the possible input cases.
+
+Notes: It is intended for this problem to be specified vaguely (ie, no given input specs). You are responsible to gather all the input requirements up front.
+
+
+
+public class Solution {
+    public int myAtoi(String str) {
+        long result = 0;
+        int length = str.length();
+        boolean negetive = false;
+        int i = 0;
+        while(i < length){
+            if (str.charAt(i) != ' '){
+                break;
+            }
+            ++i;
+        }
+        if (i == length){
+            return 0;
+        }
+        
+        if (str.charAt(i) == '-'){
+            negetive = true;
+            ++i;
+        }
+        else if (str.charAt(i) == '+'){
+            ++i;
+        }
+        
+        while(i < length){
+            if (str.charAt(i) == '0'){
+                ++i;
+            }
+            else if (str.charAt(i) > '9' || str.charAt(i) <'0'){
+                return 0;
+            }
+            else{
+                break;
+            }
+        }
+        while(i<length){
+            if (str.charAt(i) <= '9' && str.charAt(i) >='0'){
+                result = (result*10 + (str.charAt(i)-'0'));
+                if (negetive && -1*result < Integer.MIN_VALUE){
+                    return Integer.MIN_VALUE;
+                }
+                else if (!negetive && result > Integer.MAX_VALUE){
+                    return Integer.MAX_VALUE;
+                }
+                ++i;
+            }
+            else{
+                break;
+            }
+        }
+        return (int)(negetive ? -1*result : result);
+    }
+}
